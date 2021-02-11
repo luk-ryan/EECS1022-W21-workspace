@@ -71,55 +71,110 @@ public class Utilities {
 	/*
 	 * Input parameters:
 	 * 	- `ft`, `d`, `n` are the first term, common difference, and size of an arithmetic sequence.
-	 * 
-	 * Use of arrays or any Java library class (e.g., ArrayList) is strictly forbidden.
-	 * Violation of this will result in a 50% penalty on your marks.
-	 * Try to solve this problem using loops only. 
-	 *  
-	 * Refer to you lab instructions for what the method should return. 
 	 */
 	public static String getIntermediateStats(int ft, int d, int n) {
-		String result = "";
+		String result = "{";
+		int value = 0;
+		int tempValue = 0;
+		int sum = 0;
+		double avg = 0;
+		String sequence = "<";
 		
-		/* Your implementation of this method starts here. 
-		 * Recall from Week 1's tutorial videos:
-		 * 1. No System.out.println statements should appear here.
-		 * 	  Instead, an explicit, final `return` statement is placed for you.
-		 * 2. No Scanner operations should appear here (e.g., input.nextInt()).
-		 *    Instead, refer to the input parameters of this method.   
-		 */
+		// n represents the number of times we need to loop through the sequence
+		for (int i = 1 ; i <= n; i++) {
+			value = ft + (i-1) * d;
+			sum += value;
+			avg = sum / (float) i;
+			sequence = "<";
+			
+			// setting up the sequence at each stage (i)
+			for  (int j = 1; j <= i; j++) {
+				tempValue = ft + (j-1) * d;
+				
+				if (j == i) {
+					sequence = sequence + tempValue + ">";
+				}
+				else {
+					sequence = sequence + tempValue + ", ";
+				}
+			}
+			// check whether this is the last term in sequence and format string appropriately
+			if (i == n) {
+				result += String.format("[sum of %s: %d ; avg of %s: %.2f]", sequence, sum, sequence, avg);
+			}
+			else {
+				result += String.format("[sum of %s: %d ; avg of %s: %.2f], ", sequence, sum, sequence, avg);
+			}
+		}		
+		result += "}";
 		
-		
-		
-		/* Your implementation ends here. */
 		return result;
 	}
 	
 	/*
 	 * Input parameters:
 	 * 	- `ft1`, `d1`, `n1` are the first term, common difference, and size of the first arithmetic sequence.
-	 *  - `ft2`, `d2`, `n2` are the second term, common difference, and size of the second arithmetic sequence.
-	 *  
-	 * Use of arrays or any Java library class (e.g., ArrayList) is strictly forbidden.
-	 * Violation of this will result in a 50% penalty on your marks.
-	 * Try to solve this problem using loops only.  
-	 *  
-	 * Refer to you lab instructions for what the method should return. 
+	 *  - `ft2`, `d2`, `n2` are the second term, common difference, and size of the second arithmetic sequence. 
 	 */
 	public static String getInterlevaings(int ft1, int d1, int n1, int ft2, int d2, int n2) {
-		String result = "";
+		String result = "<";
+		int value1 = 0;
+		int value2 = 0;
 		
-		/* Your implementation of this method starts here. 
-		 * Recall from Week 1's tutorial videos:
-		 * 1. No System.out.println statements should appear here.
-		 * 	  Instead, an explicit, final `return` statement is placed for you.
-		 * 2. No Scanner operations should appear here (e.g., input.nextInt()).
-		 *    Instead, refer to the input parameters of this method.   
-		 */
+		// when both sequences have the same number of terms
+		if (n1 == n2) {
+			for (int i = 1; i <= n1; i++) {
+				value1 = ft1 + (i-1) * d1;
+				value2 = ft2 + (i-1) * d2;
+				
+				if (i == n1) {
+					result += "(" + value1 + "), [" + value2 + "]";
+				}
+				else {
+					result += "(" + value1 + "), [" + value2 + "], ";
+				}
+			}
+		}
+		// when the first sequence has less terms than the second
+		else if (n1 < n2) {
+			for (int i = 1; i <= n1; i++) {
+				value1 = ft1 + (i-1) * d1;
+				value2 = ft2 + (i-1) * d2;
+
+				result += "(" + value1 + "), [" + value2 + "], ";
+			}
+			for (int j = (n1+1); j <= n2; j++) {
+				value2 = ft2 + (j-1) * d2;
+				
+				if (j == n2) {
+					result += "[" + value2 + "]";
+				}
+				else {
+					result += "[" + value2 + "], ";
+				}
+			}
+		}
+		// when the second sequence has less terms than the first
+		else if (n2 < n1) {
+			for (int i = 1; i <= n2; i++) {
+				value1 = ft1 + (i-1) * d1;
+				value2 = ft2 + (i-1) * d2;
+				
+				result += "(" + value1 + "), [" + value2 + "], ";
+			}
+			for (int j = (n2+1); j <= n1; j++) {
+				value1 = ft1 + (j-1) * d1;
+				
+				if (j == n1) {
+					result += "(" + value1 + ")";
+				}
+				else {
+					result += "(" + value1 + "), ";
+				}
+			}
+		}
+		result += ">";
 		
-		
-		
-		/* Your implementation ends here. */
 		return result;
 	}	
 }
